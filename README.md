@@ -1,2 +1,1 @@
-# Heuristieken-Kaartkleuren
-Tweede repo.
+# Heuristieken
