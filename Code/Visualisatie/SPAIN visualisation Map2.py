@@ -282,6 +282,7 @@ def animate():
 	patches = []
 	color = ""
 
+
 	# empty the axis and remove them
 	ax.clear()
 	plt.axis('off')
@@ -317,5 +318,5 @@ def animate():
 
 animate()
 
-# show the animation
 plt.show()
+# show the animation

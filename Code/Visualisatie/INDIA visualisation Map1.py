@@ -103,43 +103,148 @@ for key in dict_countries:
 for key in countries_object:
     countries_object[key].add_adjacent_countries(dict_countries[key],countries_object)
 
-def get_starting_number(countries_object):
-	"""
-	make an underestimation of where to start the algorithm
-	"""
-
-	color_array = ["red", "green","yellow","blue","purple","pink","orange"]
-	max_amount = 0
-
-	# Get the min colors needed.
-	for entry in countries_object:
-		test = countries_object[entry]
-		for entry2 in test.adjacent_countries: #get into the adjacent countries
-			amount = len(set(entry2.adjacent_countries) & set(test.adjacent_countries))
-			if max_amount < amount:
-				max_amount = amount
-
-
-	if max_amount < 2:
-		max_amount = 2
-
-	# change it to the correct starting point
-	for entry in countries_object:
-		countries_object[entry].available_colours = color_array[:max_amount]
-
-
-	return color_start
-# update the colors based on the minimum needed
-color_start = get_starting_number(countries_object)
-
 # ------------------------ part to do the calculating ------------------------- #
 
+# def get_starting_number(dict_countries):
+#
+# 	amount = 0
+# 	henk123 = list()
+#
+# 	for entry in countries_object:
+# 		test = countries_object[entry]
+# 		for entry2 in test.adjacent_countries:
+# 			henk123.append(entry2.country_name)
+#
+# 		print len(set(test.adjacent_countries)) - len(set(test.adjacent_countries[0].adjacent_countries))
+#
+# 		# for entry2 in test.adjacent_countries:
+# 		# 	for entry3 in entry2.adjacent_countries:
+# 		# 		if entry3.country_name == test.country_name and :
+# 		# 			amount +=1
+# 		# 			print entry3.country_name
+# 		# print amount
+# 		# amount = 0
+#
+#
+#
+#
+# get_starting_number(dict_countries)
+
+# initializing stack
+stack = []
 
 
+# initial situation
+for colour in countries_object[countries_object.keys()[0]].available_colours:
+    country = copy.copy(countries_object[countries_object.keys()[0]])
+    country.current_colour = colour
+    country.is_coloured = True
+    stack.append([country])
 
+# what is the next child we look at?
+def next_child(parent):
 
+    countrynames = []
 
-sys.exit("~")
+    for country in parent:
+        countrynames.append(country.country_name)
+
+    key = random.choice(countries_object.keys())
+
+    while key in countrynames:
+        key = random.choice(countries_object.keys())
+
+    for country in countries_object:
+        #print countries_object[country].amount_adjacent
+        if countries_object[country].amount_adjacent > countries_object[key].amount_adjacent and country not in countrynames:
+            key = country
+
+    #print countries_object[key].country_name
+    return countries_object[key]
+
+# function to generate children
+def generate_children(parent):
+
+    countrynames = []
+    country_selected = False
+
+    if len(parent) > 0:
+        # store all countries from parent
+        for country in parent:
+            countrynames.append(country.country_name)
+
+        # for all non-coloured countries
+        for key in countries_object:
+            if key not in countrynames:
+
+                countries_object[key].update_available_colours(parent)
+
+                # if 1 colour available, colour this country first
+                if len(countries_object[key].available_colours) == 1:
+                    next_country = countries_object[key]
+                    country_selected = True
+
+    # if no country with 1 possibility is present, select random
+    if not country_selected:
+        next_country = next_child(parent)
+        country_selected = True
+
+    children = []
+
+    # we only want to iterate over the colors that are available
+    next_country.update_available_colours(parent)
+    for colour in next_country.available_colours:
+        # make copy - we want to add copies to stack, not references to originals
+        copy_parent = copy.copy(parent)
+        copy_next_country = copy.copy(next_country)
+
+        # only creates children that can be created (i.e. that have an available color)
+        copy_next_country.current_colour = colour
+        copy_next_country.is_coloured = True
+        # add copy to stack entry, save new entry on stack
+        copy_parent.append(copy_next_country)
+        children.append(copy_parent)
+        #print copy_next_country.country_name, '+', copy_next_country.current_colour
+    # save next country as coloured so that we won't pick it again
+    next_country.is_coloured = True
+    next_country.available_colours = ["red", "green","yellow","blue"]
+
+    return children
+
+def all_countries_coloured(countries_object):
+    for country in countries_object:
+        if countries_object[country].is_coloured == False:
+            return False
+    return True
+
+solution = []
+
+def algorithm():
+    # depth-first
+    while (len(stack) != 0): #and all_countries_coloured(countries_object) == False):
+        parent = stack.pop()
+        #print len(parent)
+        #print len(countries_object)
+        if len(parent) == len(countries_object):
+            solution = parent
+            # for country in solution:
+                # print country.country_name, country.current_colour, country.amount_adjacent
+            break
+        children = generate_children(parent)
+        # if there are no children, there are no solutions for this parent
+        if len(children) != 0:
+            for child in children:
+                stack.append(child)
+                #print child[len(child)-1].country_name, '+', child[len(child)-1].current_colour
+
+    # if the stack is empty, there are no solutions
+    if len(stack) == 0:
+        print "No solution"
+    else:
+        return solution
+
+solution = algorithm()
+
 
 # ------------------ part to determine what shapefile to use -------------------- #
 
@@ -190,7 +295,9 @@ ax = figure.add_subplot(111)
 # get shapefile
 mkaart = what_map_to_use(my_map)
 
-color_decoder = {"red" : "#a6cee3", "green" : "#1f78b4","yellow": "#b2df8a","blue" : "#33a02c", "purple" : "#fb9a99","pink" : "#e31a1c","orange" : "#fdbf6f" }
+# color_decoder = {"red" : "#a6cee3", "green" : "#1f78b4","yellow": "#b2df8a","blue" : "#33a02c", "purple" : "#fb9a99","pink" : "#e31a1c","orange" : "#fdbf6f" }
+
+color_decoder = {"red" : "#e41a1c", "green" : "#377eb8","yellow": "#4daf4a","blue" : "#984ea3", "purple" : "##ff7f00","pink" : "#ffff33","orange" : "#a65628" }
 
 # animation function.  This is called sequentially
 def animate():

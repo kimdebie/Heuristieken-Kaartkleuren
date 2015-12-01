@@ -228,13 +228,10 @@ def algorithm():
     if len(stack) == 0:
         print "No solution"
     else:
-        for country in solution:
-                print country.country_name, country.current_colour, country.amount_adjacent
         return solution
         #print solution
 
 solution = algorithm()
-print solution
 
 
 # initiate the dict to use outside the function
@@ -284,7 +281,9 @@ ax = figure.add_subplot(111)
 # get shapefile
 mkaart = what_map_to_use(my_map)
 
-color_decoder = {"red" : "#a6cee3", "green" : "#1f78b4","yellow": "#b2df8a","blue" : "#33a02c", "purple" : "#fb9a99","pink" : "#e31a1c","orange" : "#fdbf6f" }
+
+
+color_decoder = {"red" : "#e41a1c", "green" : "#377eb8","yellow": "#4daf4a","blue" : "#984ea3", "purple" : "##ff7f00","pink" : "#ffff33","orange" : "#a65628" }
 
 # animation function.  This is called sequentially
 def animate():
@@ -299,8 +298,6 @@ def animate():
 	# empty the axis and remove them
     ax.clear()
     plt.axis('off')
-
-
 
 	# add the color
 	# if spain is not empty
