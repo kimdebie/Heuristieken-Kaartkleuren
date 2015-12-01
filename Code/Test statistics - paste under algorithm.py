@@ -10,7 +10,8 @@ for i in range(0,100):
             times.append(end)
 
     #print max(times), min(times), numpy.mean(times)
-    averages.append(numpy.mean(times))
+    if i is not 0:
+        averages.append(numpy.mean(times))
 
 #--------------------------display results in histogram------------------------------------------#
 '''

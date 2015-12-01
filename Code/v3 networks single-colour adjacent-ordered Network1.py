@@ -24,12 +24,14 @@ def load_dict(filename):
         # take first value of row as key in dictionary
         # add rest of list as value in dictionary
         try:
-            countries[row[0]].append(row[1])
+            if not row[1] in countries[row[0]]:
+                countries[row[0]].append(row[1])
         except (AttributeError, KeyError):
             countries[row[0]] = list()
             countries[row[0]].append(row[1])
         try:
-            countries[row[1]].append(row[0])
+            if not row[0] in countries[row[1]]:
+                countries[row[1]].append(row[0])
         except (AttributeError, KeyError):
             countries[row[1]] = list()
             countries[row[1]].append(row[0])
@@ -45,7 +47,7 @@ dict_countries = load_dict("Network1.csv")
 class country(object):
 
     def __init__(self, key):
-        self.available_colours = ["red", "green","yellow","blue"]
+        self.available_colours = ["red", "green","yellow"]
         self.current_colour = ""
         self.is_coloured = False
         self.amount_adjacent = 0
@@ -165,7 +167,7 @@ def generate_children(parent):
         children.append(copy_parent)
     # save next country as coloured so that we won't pick it again   
     next_country.is_coloured = True
-    next_country.available_colours = ["red", "green","yellow","blue"]
+    next_country.available_colours = ["red", "green","yellow"]
 
     return children
 
@@ -190,6 +192,7 @@ def algorithm():
         #print len(countries_object)
         if len(parent) == len(countries_object):
             solution = parent
+            
             break
         children = generate_children(parent)
         # if there are no children, there are no solutions for this parent
@@ -199,24 +202,25 @@ def algorithm():
                 #print child[len(child)-1].country_name, '+', child[len(child)-1].current_colour
 
     # if the stack is empty, there are no solutions
-    if len(stack) == 0:
-        print "No solution"
+    # if len(stack) == 0:
+    #     print "No solution"
     #else:
         #print solution
 
 #--------------------return the timing of the results--------------------------------------------#
 averages = []
-
 for i in range(0,100):
     times = []
-    for i in range(0,100):
+    for j in range(0,100):
         start = timeit.default_timer()
         algorithm();
         end = timeit.default_timer() - start
-        times.append(end)
+        if i is not 0:
+            times.append(end)
 
     #print max(times), min(times), numpy.mean(times)
-    averages.append(numpy.mean(times))
+    if i is not 0:
+        averages.append(numpy.mean(times))
 
 #--------------------------display results in histogram------------------------------------------#
 '''
@@ -284,5 +288,3 @@ def animate(i):
 
 ani = animation.FuncAnimation(fig, animate, 1, repeat=False, blit=True)
 plt.show()
-
-
