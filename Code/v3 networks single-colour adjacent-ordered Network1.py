@@ -1,97 +1,20 @@
 
 
 # ----------------------- part to import the dictionary. ---------------------- #
-import copy
-import csv
-import timeit
-import time
-import numpy
-# Loads a dictionary from a comma-separated-values file
-# Returns a dictionary with area names as keys and neighbours as values
-def load_dict(filename):
-    # open provided file
-    csv_file = open(filename, 'r')
-
-    # initiate reader for the csv file
-    reader = csv.reader(csv_file, delimiter=';')
-    reader.next()
-
-    # create dictionary
-    countries = dict()
-
-    # read all rows of csv_file
-    for row in reader:
-        # take first value of row as key in dictionary
-        # add rest of list as value in dictionary
-        try:
-            if not row[1] in countries[row[0]]:
-                countries[row[0]].append(row[1])
-        except (AttributeError, KeyError):
-            countries[row[0]] = list()
-            countries[row[0]].append(row[1])
-        try:
-            if not row[0] in countries[row[1]]:
-                countries[row[1]].append(row[0])
-        except (AttributeError, KeyError):
-            countries[row[1]] = list()
-            countries[row[1]].append(row[0])
-
-    # return written dictionary
-    return countries
+import init_net
 
 # call the load_dict function
-dict_countries = load_dict("Network1.csv")
+dict_countries = init_net.load_dict("Network1.csv")
 
-# --------------------- Making a class for the countries. --------------------- #
+countries_object = init_net.initiate(dict_countries)
 
-class country(object):
-
-    def __init__(self, key):
-        self.available_colours = ["red", "green","yellow"]
-        self.current_colour = ""
-        self.is_coloured = False
-        self.amount_adjacent = 0
-        self.country_name = key
-        # list with all the adjacent countries as objects.
-        self.adjacent_countries = list()
-
-    # set the adjecent countries for this country and determine length
-    def add_adjacent_countries(self,adj_country_list,countries_object):
-        for entry in adj_country_list:
-            self.adjacent_countries.append(countries_object[entry])
-
-        # determine length
-        self.amount_adjacent = len(adj_country_list)
-
-    # updates the available_colours for the country based on current_colour
-    # of the adjacent_countries coloured in current situation (parent).
-    def update_available_colours(self, parent):
-        for country in parent:
-            if country.is_coloured:
-                for adjacent_country in self.adjacent_countries:
-                    if country.country_name == adjacent_country.country_name and country.current_colour in self.available_colours:
-                        self.available_colours.remove(country.current_colour)
-
-# -------------------------------- initiation --------------------------------- #
-
-# dictionary with all the country objects.
-countries_object = dict()
-
-# make the dictionary with all the objects.
-# first, without adjecent country objects
-for key in dict_countries:
-    countries_object[key] = country(key)
-
-# add the adjacent_countries to the object.
-# now add these objects
-for key in countries_object:
-    countries_object[key].add_adjacent_countries(dict_countries[key],countries_object)
-
+print dict_countries, countries_object
 # ------------------------ part to do the calculating ------------------------- #
 
 # there is a separate calculation file - this is 'prototype depth-first smart.py'
 # initializing stack
 import random 
+import copy
 
 # initializing stack
 stack = []
@@ -167,7 +90,7 @@ def generate_children(parent):
         children.append(copy_parent)
     # save next country as coloured so that we won't pick it again   
     next_country.is_coloured = True
-    next_country.available_colours = ["red", "green","yellow"]
+    next_country.available_colours = ["red", "green","yellow", "blue"]
 
     return children
 
@@ -176,6 +99,8 @@ def all_countries_coloured(countries_object):
         if countries_object[country].is_coloured == False:
             return False
     return True
+
+import time
 
 solution = []
 
@@ -192,7 +117,6 @@ def algorithm():
         #print len(countries_object)
         if len(parent) == len(countries_object):
             solution = parent
-            
             break
         children = generate_children(parent)
         # if there are no children, there are no solutions for this parent
@@ -208,6 +132,8 @@ def algorithm():
         #print solution
 
 #--------------------return the timing of the results--------------------------------------------#
+import numpy
+import timeit
 averages = []
 for i in range(0,100):
     times = []
