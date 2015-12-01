@@ -2,11 +2,12 @@
 averages = []
 for i in range(0,100):
     times = []
-    for i in range(0,100):
+    for j in range(0,100):
         start = timeit.default_timer()
         algorithm();
         end = timeit.default_timer() - start
-        times.append(end)
+        if i is not 0:
+            times.append(end)
 
     #print max(times), min(times), numpy.mean(times)
     averages.append(numpy.mean(times))
