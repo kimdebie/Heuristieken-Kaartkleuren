@@ -77,7 +77,7 @@ for key in countries_object:
 
 # ------------------------ part to do the calculating ------------------------- #
 
-import random 
+import random
 
 # initializing stack
 stack = []
@@ -111,7 +111,7 @@ def next_child(parent):
 
 # function to generate children
 def generate_children(parent):
-    
+
     countrynames = []
     country_selected = False
 
@@ -123,9 +123,9 @@ def generate_children(parent):
         # for all non-coloured countries
         for key in countries_object:
             if key not in countrynames:
-                
+
                 countries_object[key].update_available_colours(parent)
-                
+
                 # if 1 colour available, colour this country first
                 if len(countries_object[key].available_colours) == 1:
                     next_country = countries_object[key]
@@ -152,7 +152,7 @@ def generate_children(parent):
         copy_parent.append(copy_next_country)
         children.append(copy_parent)
 
-    # save next country as coloured so that we won't pick it again   
+    # save next country as coloured so that we won't pick it again
     next_country.is_coloured = True
     next_country.available_colours = ["red", "green","yellow", "blue"]
 
@@ -169,7 +169,7 @@ def algorithm():
     solution = []
     i = 1
     # depth-first
-    while (len(stack) != 0): 
+    while (len(stack) != 0):
         # new random seed for selecting next country
         random.seed(time.clock() + i)
         i += 1
@@ -208,7 +208,7 @@ for i in range(0,100):
 
 #--------------------------display results in histogram------------------------------------------#
 '''
-Creating a histogram, edited from http://matplotlib.org/1.5.0/examples/animation/histogram.html 
+Creating a histogram, edited from http://matplotlib.org/1.5.0/examples/animation/histogram.html
 '''
 """
 This example shows how to use a path patch to draw a bunch of
