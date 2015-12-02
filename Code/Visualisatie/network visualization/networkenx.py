@@ -192,8 +192,6 @@ def algorithm():
             solution = parent
             for country in solution:
                 print country.country_name, country.current_colour
-                for friend in country.adjacent_countries:
-                    print friend.country_name
             return solution
 
         children = generate_children(parent)
