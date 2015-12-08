@@ -26,7 +26,7 @@ def load_dict(my_map):
     	filename = "Dictionary/Map2.csv"
 
     elif my_map == 'USA':
-    	filename = "Dictionary/Map3.csv"
+    	filename = "Dictionary/Map3v2.csv"
     else:
     	sys.exit("unknown map, please check top of the code!")
 
@@ -106,12 +106,12 @@ def Draw_map(solution,my_map,typevis):
     color_decoder = {"red" : "#a6cee3", "green" : "#1f78b4","yellow": "#b2df8a","blue" : "#33a02c", "purple" : "#fb9a99","pink" : "#e31a1c","orange" : "#fdbf6f" }
 
 
-        # make empty array for the colored polygons.
-        patches = []
+    # make empty array for the colored polygons.
+    patches = []
 
-        # empty the axis and remove them
-        ax.clear()
-        plt.axis('off')
+    # empty the axis and remove them
+    ax.clear()
+    # plt.axis('off')
 
     if typevis == "end":
         # add the color
@@ -128,7 +128,7 @@ def Draw_map(solution,my_map,typevis):
                                 color = color_decoder[entry.current_colour]
 
                         patches.append(Polygon(np.array(shape), True))
-                        ax.add_collection(PatchCollection(patches, facecolor=  color, edgecolor='k', linewidths=1., zorder=2))
+                        ax.add_collection(PatchCollection(patches, facecolor=  color, edgecolor='k', linewidths=4, zorder=2))
                         patches = []
 
         else:
@@ -137,7 +137,7 @@ def Draw_map(solution,my_map,typevis):
                     if info["NAME_2"].lower().find(key.country_name) != -1:
                         color = color_decoder[key.current_colour]
                         patches.append(Polygon(np.array(shape), True))
-                        ax.add_collection(PatchCollection(patches, facecolor= color, edgecolor='k', linewidths=1., zorder=2))
+                        ax.add_collection(PatchCollection(patches, facecolor= color, edgecolor='white', linewidths=1., zorder=2))
                         patches = []
         # show the animation
         plt.show()
