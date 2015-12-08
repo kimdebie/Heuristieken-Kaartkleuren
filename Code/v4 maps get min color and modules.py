@@ -208,7 +208,6 @@ def algorithm():
 
     # if the stack is empty, there are no solutions
     if len(stack) == 0:
-
         # add 1+ color to the country objects
         GoodNumberOne = get_correct_number()
 
@@ -226,13 +225,13 @@ def algorithm():
         # rerun the algorithm with +1 colour
         return algorithm()
     else:
-        print solution
         return solution
 
 solution = algorithm()
 
+
 for entry in solution:
-    print entry.country_name, entry.current_colour
+    print entry.country_name,entry.current_colour
 
 # draw the map
-importvis.Draw_map(solution,my_map)
+importvis.Draw_map(solution,my_map,"end")

@@ -55,7 +55,7 @@ def load_dict(my_map):
 
 # ----------------------- part to import the dictionary. ---------------------- #
 
-def Draw_map(solution,my_map):
+def Draw_map(solution,my_map,typevis):
     # initiate the dict to use outside the function
     spain_dict = dict()
 
@@ -105,31 +105,31 @@ def Draw_map(solution,my_map):
 
     color_decoder = {"red" : "#a6cee3", "green" : "#1f78b4","yellow": "#b2df8a","blue" : "#33a02c", "purple" : "#fb9a99","pink" : "#e31a1c","orange" : "#fdbf6f" }
 
-    # animation function.  This is called sequentially
-    def animate():
-    	# make empty array for the colored polygons.
-    	patches = []
 
-    	# empty the axis and remove them
-    	ax.clear()
-    	plt.axis('off')
+        # make empty array for the colored polygons.
+        patches = []
 
-    	# add the color
-    	# if spain is not empty
-    	if my_map == 'spain':
-    		for key in spain_dict:
-    			for info, shape in zip(mkaart.mkaart_info, mkaart.mkaart):
-    				uni_string = unicode(info["NAME_2"],'utf8')
-    				uni_string = unicodedata.normalize('NFKD', uni_string ).encode('ascii', 'ignore')
-    				if uni_string.lower().find(spain_dict[key]) != -1:
+        # empty the axis and remove them
+        ax.clear()
+        plt.axis('off')
 
-    					for entry in solution:
-    						if entry.country_name == key:
-    							color = color_decoder[entry.current_colour]
+    if typevis == "end":
+        # add the color
+        # if spain is not empty
+        if my_map == 'spain':
+            for key in spain_dict:
+                for info, shape in zip(mkaart.mkaart_info, mkaart.mkaart):
+                    uni_string = unicode(info["NAME_2"],'utf8')
+                    uni_string = unicodedata.normalize('NFKD', uni_string ).encode('ascii', 'ignore')
+                    if uni_string.lower().find(spain_dict[key]) != -1:
 
-    					patches.append(Polygon(np.array(shape), True))
-    					ax.add_collection(PatchCollection(patches, facecolor=  color, edgecolor='k', linewidths=1., zorder=2))
-    					patches = []
+                        for entry in solution:
+                            if entry.country_name == key:
+                                color = color_decoder[entry.current_colour]
+
+                        patches.append(Polygon(np.array(shape), True))
+                        ax.add_collection(PatchCollection(patches, facecolor=  color, edgecolor='k', linewidths=1., zorder=2))
+                        patches = []
 
         else:
             for key in solution:
@@ -139,11 +139,31 @@ def Draw_map(solution,my_map):
                         patches.append(Polygon(np.array(shape), True))
                         ax.add_collection(PatchCollection(patches, facecolor= color, edgecolor='k', linewidths=1., zorder=2))
                         patches = []
+        # show the animation
+        plt.show()
 
-
-    # anim = animation.FuncAnimation(figure, animate, frames=200, interval=1, blit=False)
-
-    animate()
-
-    # show the animation
-    plt.show()
+    # elif typevis == "animate":
+    #     def animate(wip):
+    #         patches = []
+    #         ax.clear()
+    #
+    #         if my_map == 'spain':
+    #         else:
+    #             def update_shapes(i, solution, ax):
+    #                 for key in solution:
+    #                     for info, shape in zip(mkaart.mkaart_info, mkaart.mkaart):
+    #                         if info["NAME_2"].lower().find(key.country_name) != -1:
+    #                             color = color_decoder[key.current_colour]
+    #                             patches.append(Polygon(np.array(shape), True))
+    #                             ax.add_collection(PatchCollection(patches, facecolor= color, edgecolor='k', linewidths=1., zorder=2))
+    #                             patches = []
+    #
+    #
+    #
+    #
+    #
+    #
+    #         anim = animation.FuncAnimation(figure, update, frames=200, interval=1, blit=False fargs=(data, l))
+    #
+    #         # show the animation
+    #         plt.show()

@@ -19,12 +19,12 @@ jefferson,forest,elk,clearfield,indiana,armstrong,clarion
 elk,forest,mc kean,cameron,clearfield,jefferson
 mc kean,warren,elk,cameron,potter
 cameron,mc kean,potter,clinton,clearfield,elk
-clearfield,elk,cameron,clinton,centre,cambria,indiana,jefferson
-cambria,indiana,clearfield,blair,bedford,somerset,westmoreland
+clearfield,elk,cameron,clinton,centre,cambria,indiana,jefferson,blair
+cambria,indiana,clearfield,blair,bedford,somerset,westmoreland,centre
 somerset,fayette,westmoreland,cambria,bedford
 bedford,blair,huntingdon,fulton,cambria,somerset
-blair,bedford,cambria,centre,huntingdon
-centre,blair,clearfield,clinton,union,mifflin,huntingdon
+blair,bedford,cambria,centre,huntingdon,clearfield
+centre,blair,clearfield,clinton,union,mifflin,huntingdon,cambria
 clinton,centre,clearfield,cameron,potter,lycoming,union
 potter,mc kean,cameron,clinton,lycoming,tioga
 huntingdon,centre,mifflin,juniata,franklin,fulton,bedford,blair
