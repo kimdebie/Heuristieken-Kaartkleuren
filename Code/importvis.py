@@ -26,7 +26,7 @@ def load_dict(my_map):
     	filename = "Dictionary/Map2.csv"
 
     elif my_map == 'USA':
-    	filename = "Dictionary/Map3v2.csv"
+    	filename = "Dictionary/Map3.csv"
     else:
     	sys.exit("unknown map, please check top of the code!")
 

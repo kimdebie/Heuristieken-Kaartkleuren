@@ -231,5 +231,8 @@ def algorithm():
 
 solution = algorithm()
 
+for entry in solution:
+    print entry.country_name, entry.current_colour
+
 # draw the map
 importvis.Draw_map(solution,my_map)
