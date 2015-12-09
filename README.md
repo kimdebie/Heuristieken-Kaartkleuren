@@ -20,6 +20,7 @@ Functions and classes required to initiate the network from the provided csv fil
 
 
 Initiation_map:
+Functions and classes required to initiate the list of countries from the provided csv file
 
 	Functions:
 		load_dict(filename)
@@ -33,3 +34,5 @@ Initiation_map:
 	Classes:
 		Country
 			Definition of country object.
+
+

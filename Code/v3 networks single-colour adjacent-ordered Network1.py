@@ -1,6 +1,9 @@
 
 
 # ----------------------- part to import the dictionary. ---------------------- #
+import random 
+import copy
+import time
 import init_net
 
 # call the load_dict function
@@ -8,24 +11,8 @@ dict_countries = init_net.load_dict("Network1.csv")
 
 countries_object = init_net.initiate(dict_countries)
 
-print dict_countries, countries_object
 # ------------------------ part to do the calculating ------------------------- #
 
-# there is a separate calculation file - this is 'prototype depth-first smart.py'
-# initializing stack
-import random 
-import copy
-
-# initializing stack
-stack = []
-
-
-# initial situation
-for colour in countries_object[countries_object.keys()[0]].available_colours:
-    country = copy.copy(countries_object[countries_object.keys()[0]])
-    country.current_colour = colour
-    country.is_coloured = True
-    stack.append([country])
 
 # what is the next child we look at?
 def next_child(parent):
@@ -88,65 +75,71 @@ def generate_children(parent):
         # add copy to stack entry, save new entry on stack
         copy_parent.append(copy_next_country)
         children.append(copy_parent)
+
     # save next country as coloured so that we won't pick it again   
     next_country.is_coloured = True
     next_country.available_colours = ["red", "green","yellow", "blue"]
 
     return children
 
-def all_countries_coloured(countries_object):
-    for country in countries_object:
-        if countries_object[country].is_coloured == False:
-            return False
-    return True
-
-import time
-
-solution = []
-
 def algorithm():
+    # initiate counter for random seed
     i = 1
+
+    # create stack as empty array
+    stack = []
+
+    # generate first key at random
+    key = random.choice(countries_object.keys())
+
+    # select country with most neighbours
+    for country in countries_object:
+        if countries_object[country].amount_adjacent > countries_object[key].amount_adjacent:
+            key = country
+
+    # colour first country
+    for colour in countries_object[key].available_colours:
+        country = copy.copy(countries_object[key])
+        country.current_colour = colour
+        country.is_coloured = True
+        stack.append([country])
+
     # depth-first
-    while (len(stack) != 0): #and all_countries_coloured(countries_object) == False):
+    while (len(stack) != 0):
         # new random seed for selecting next country
         random.seed(time.clock() + i)
         i += 1
 
         parent = stack.pop()
-        #print len(parent)
-        #print len(countries_object)
         if len(parent) == len(countries_object):
-            solution = parent
-            break
+            return parent
+
         children = generate_children(parent)
+
         # if there are no children, there are no solutions for this parent
         if len(children) != 0:
             for child in children:
                 stack.append(child)
-                #print child[len(child)-1].country_name, '+', child[len(child)-1].current_colour
 
-    # if the stack is empty, there are no solutions
-    # if len(stack) == 0:
-    #     print "No solution"
-    #else:
-        #print solution
 
 #--------------------return the timing of the results--------------------------------------------#
-import numpy
+import timer
 import timeit
+
 averages = []
-for i in range(0,100):
+    
+for i in range(0,10):
+    
     times = []
-    for j in range(0,100):
+
+    for j in range(0,10):
         start = timeit.default_timer()
-        algorithm();
+        algorithm()
         end = timeit.default_timer() - start
-        if i is not 0:
-            times.append(end)
+        times.append(end)
 
     #print max(times), min(times), numpy.mean(times)
-    if i is not 0:
-        averages.append(numpy.mean(times))
+    averages.append(min(times))
 
 #--------------------------display results in histogram------------------------------------------#
 '''
@@ -160,6 +153,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.path as path
 import matplotlib.animation as animation
+import numpy
 
 fig, ax = plt.subplots()
 
