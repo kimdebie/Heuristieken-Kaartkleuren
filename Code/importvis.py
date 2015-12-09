@@ -9,51 +9,6 @@ import matplotlib.animation as animation
 # get spain map working correctly with non english letters.
 import unicodedata
 
-# ----------------------- part to import the dictionary. ---------------------- #
-
-# load and read the csv file.
-import csv
-
-# Loads a dictionary from a comma-separated-values file
-# Returns a dictionary with area names as keys and neighbours as values
-def load_dict(my_map):
-
-
-    if my_map == 'india':
-    	filename = ".Dictionary/Map1.csv"
-
-    elif my_map == 'spain':
-    	filename = "Dictionary/Map2.csv"
-
-    elif my_map == 'USA':
-    	filename = "Dictionary/Map3v2.csv"
-    else:
-    	sys.exit("unknown map, please check top of the code!")
-
-
-    # open provided file
-    countries_csv = open(filename, 'r')
-
-    # initiate reader for the csv file
-    reader = csv.reader(countries_csv)
-
-    # create dictionary
-    countries = dict()
-
-    # read all rows of csv_file
-    for row in reader:
-        # take first value of row as key in dictionary
-        # add rest of list as value in dictionary
-        countries[row[0]] = row[1:len(row)]
-
-    # return written dictionary
-    return countries
-
-# call the load_dict function
-
-
-
-# ----------------------- part to import the dictionary. ---------------------- #
 
 def Draw_map(solution,my_map,typevis):
     # initiate the dict to use outside the function

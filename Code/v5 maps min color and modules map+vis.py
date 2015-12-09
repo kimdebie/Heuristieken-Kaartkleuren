@@ -14,92 +14,20 @@ import numpy
 
 # import the visualisation and csv importer
 import importvis
-
 import init_map
 
 # load the dictionary
 dict_countries = init_map.load_dict(my_map)
 
-# --------------------- Making a class for the countries. --------------------- #
+# create list of countries
+countries_object = init_map.initiate(dict_countries)
 
-class country(object):
-
-    def __init__(self, key):
-        self.available_colours = []
-        self.current_colour = ""
-        self.is_coloured = False
-        self.amount_adjacent = 0
-        self.country_name = key
-        # list with all the adjacent countries as objects.
-        self.adjacent_countries = list()
-
-    # set the adjecent countries for this country and determine length
-    def add_adjacent_countries(self,adj_country_list,countries_object):
-        for entry in adj_country_list:
-            self.adjacent_countries.append(countries_object[entry])
-
-        # determine length
-        self.amount_adjacent = len(adj_country_list)
-
-    # updates the available_colours for the country based on current_colour
-    # of the adjacent_countries coloured in current situation (parent).
-    def update_available_colours(self, parent):
-        for country in parent:
-            if country.is_coloured: #and len(self.available_colours) != 0:
-                for adjacent_country in self.adjacent_countries:
-                    if country.country_name == adjacent_country.country_name and country.current_colour in self.available_colours:
-                        self.available_colours.remove(country.current_colour)
-
-# -------------------------------- initiation --------------------------------- #
-
-def GetColourArray(number):
-    color_array = ["red", "green","yellow","blue","purple","pink","orange"]
-    return color_array[:number]
-
-def get_starting_number():
-	"""
-	make an underestimation of where to start the algorithm
-	"""
-
-	max_amount = 0
-
-	# Get the min colors needed.
-	for entry in countries_object:
-		test = countries_object[entry]
-		for entry2 in test.adjacent_countries: #get into the adjacent countries
-			amount = len(set(entry2.adjacent_countries) & set(test.adjacent_countries))
-			if max_amount < amount:
-				max_amount = amount
-
-	if max_amount < 2:
-		max_amount = 2
-
-	return max_amount
-
-
-# dictionary with all the country objects.
-countries_object = dict()
-
-# make the dictionary with all the objects.
-# first, without adjecent country objects
-for key in dict_countries:
-    countries_object[key] = country(key)
-
-# add the adjacent_countries to the object.
-# now add these objects
-for key in countries_object:
-    countries_object[key].add_adjacent_countries(dict_countries[key],countries_object)
-
-# add the colours
-for key in countries_object:
-    countries_object[key].available_colours = GetColourArray(get_starting_number())
-    print countries_object[key].available_colours
 
 # update the color array.
 counter = 0
 def get_correct_number():
     globals()['counter'] += 1
-    return get_starting_number() + globals()['counter']
+    return init_map.get_starting_number(countries_object) + globals()['counter']
 
 
 # ------------------------ part to do the calculating ------------------------- #
@@ -155,7 +83,7 @@ def generate_children(parent):
                     next_country = countries_object[key]
                     country_selected = True
 
-    # if no country with 1 possibility is present, select random
+    # if no country with 1 possibility is present, select using algorithm for choice
     if not country_selected:
         next_country = next_child(parent)
         country_selected = True
@@ -178,7 +106,7 @@ def generate_children(parent):
 
     # save next country as coloured so that we won't pick it again
     next_country.is_coloured = True
-    next_country.available_colours = GetColourArray(get_starting_number() + globals()['counter'])
+    next_country.available_colours = init_map.GetColourArray(init_map.get_starting_number(countries_object) + globals()['counter'])
 
     return children
 
@@ -188,10 +116,36 @@ def all_countries_coloured(countries_object):
             return False
     return True
 
+
 def algorithm():
 
+    steps = 0
+
+    # initiate counter for random seed
+    i = 1
+
+    # create stack as empty array
+    stack = []
+
+    # generate first key at random
+    key = random.choice(countries_object.keys())
+
+    # select country with most neighbours
+    for country in countries_object:
+        if countries_object[country].amount_adjacent > countries_object[key].amount_adjacent:
+            key = country
+
+    # colour first country
+    for colour in countries_object[key].available_colours:
+        country = copy.copy(countries_object[key])
+        country.current_colour = colour
+        country.is_coloured = True
+        stack.append([country])
+
     solution = []
+    
     print "starting the algo"
+    
     # depth-first
     while (len(stack) != 0):
         # new random seed for selecting next country
@@ -200,11 +154,15 @@ def algorithm():
         #print len(parent)
         #print len(countries_object)
         if len(parent) == len(countries_object):
-            solution = parent
+            #if you want the solution as output
+            #solution = parent
+            #if you want the amount of steps taken as output
+            solution = steps
             break
         children = generate_children(parent)
         # if there are no children, there are no solutions for this parent
         if len(children) != 0:
+            steps += len(children)
             for child in children:
                 stack.append(child)
 
@@ -214,8 +172,7 @@ def algorithm():
         GoodNumberOne = get_correct_number()
 
         for key in countries_object:
-            countries_object[key].available_colours = GetColourArray(GoodNumberOne)
-            print countries_object[key].available_colours
+            countries_object[key].available_colours = init_map.GetColourArray(GoodNumberOne)
 
         # initial situation
         for colour in countries_object[countries_object.keys()[0]].available_colours:
@@ -229,11 +186,91 @@ def algorithm():
     else:
         return solution
 
-solution = algorithm()
+#solution = algorithm()
+
+#--------------------return the timing of the results--------------------------------------------#
+import timer
+import timeit
+
+steps = []
+
+for i in range(0,10):
+    
+    for j in range(0,10):
+        step = algorithm()
+        print step
+        steps.append(step)
+
+    #print max(times), min(times), numpy.mean(times)
+    
+
+#--------------------------display results in histogram------------------------------------------#
+'''
+Creating a histogram, edited from http://matplotlib.org/1.5.0/examples/animation/histogram.html 
+'''
+"""
+This example shows how to use a path patch to draw a bunch of
+rectangles for an animated histogram
+"""
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import matplotlib.path as path
+import matplotlib.animation as animation
+import numpy
+
+fig, ax = plt.subplots()
+
+# histogram our data with numpy
+data = steps
+n, bins = numpy.histogram(data, 100)
+
+# get the corners of the rectangles for the histogram
+left = numpy.array(bins[:-1])
+right = numpy.array(bins[1:])
+bottom = numpy.zeros(len(left))
+top = bottom + n
+nrects = len(left)
+
+# here comes the tricky part -- we have to set up the vertex and path
+# codes arrays using moveto, lineto and closepoly
+
+# for each rect: 1 for the MOVETO, 3 for the LINETO, 1 for the
+# CLOSEPOLY; the vert for the closepoly is ignored but we still need
+# it to keep the codes aligned with the vertices
+nverts = nrects*(1 + 3 + 1)
+verts = numpy.zeros((nverts, 2))
+codes = numpy.ones(nverts, int) * path.Path.LINETO
+codes[0::5] = path.Path.MOVETO
+codes[4::5] = path.Path.CLOSEPOLY
+verts[0::5, 0] = left
+verts[0::5, 1] = bottom
+verts[1::5, 0] = left
+verts[1::5, 1] = top
+verts[2::5, 0] = right
+verts[2::5, 1] = top
+verts[3::5, 0] = right
+verts[3::5, 1] = bottom
+
+barpath = path.Path(verts, codes)
+patch = patches.PathPatch(
+    barpath, facecolor='red', edgecolor='purple', alpha=0.5)
+ax.add_patch(patch)
+
+ax.set_xlim(left[0], right[-1])
+ax.set_ylim(bottom.min(), top.max())
 
 
-for entry in solution:
-    print entry.country_name,entry.current_colour
+def animate(i):
+    # simulate new data coming in
+    data = steps
+    n, bins = numpy.histogram(data, 100)
+    top = bottom + n
+    verts[1::5, 1] = top
+    verts[2::5, 1] = top
+    return [patch, ]
+
+ani = animation.FuncAnimation(fig, animate, 1, repeat=False, blit=True)
+plt.show()
 
 # draw the map
-importvis.Draw_map(solution,my_map,"end")
+#importvis.Draw_map(solution,my_map,"end")
