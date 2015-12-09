@@ -1,0 +1,48 @@
+.state rect {
+  fill: #dedede;
+}
+
+.state text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+}
+
+.state--red rect {
+  fill: red;
+}
+
+.state--red text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+  fill: white;
+}
+
+.state--green rect {
+  fill: green;
+}
+
+.state--green text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+  fill: white;
+}
+
+.state--yellow rect {
+  fill: yellow;
+}
+
+.state--yellow text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+  fill: white;
+}
+
+.state--blue rect {
+  fill: blue;
+}
+
+.state--blue text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+  fill: white;
+}
