@@ -132,5 +132,5 @@ with open('solutionfile.csv', 'wb') as outfile:
 import webbrowser
 new = 2
 
-url = "file:///C:/Users/Kim/Documents/GitHub/Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3.html"
+url = "file:///C:/Users/Kim/Documents/GitHub/Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3network1.html"
 webbrowser.open(url,new=new)
