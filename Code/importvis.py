@@ -9,7 +9,6 @@ import matplotlib.animation as animation
 # get spain map working correctly with non english letters.
 import unicodedata
 
-
 def Draw_map(solution,my_map,typevis):
     # initiate the dict to use outside the function
     spain_dict = dict()

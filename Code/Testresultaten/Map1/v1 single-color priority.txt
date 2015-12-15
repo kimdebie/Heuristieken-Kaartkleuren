@@ -1,4 +1,0 @@
-
-Maximum time: 0.22246793265 
-Minimum time: 1.19766011366e-05
-Average time: 0.000402378069646

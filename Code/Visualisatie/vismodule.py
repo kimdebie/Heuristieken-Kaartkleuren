@@ -10,5 +10,5 @@ import webbrowser
 new = 2
 
 
-url = "file:" + ///C:/Users/Kim/Documents/GitHub/ + "Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3network" + netnumber + ".html"
+url = "file:" + "///C:/Users/Kim/Documents/GitHub/" + "Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3network" + netnumber + ".html"
 webbrowser.open(url,new=new)
