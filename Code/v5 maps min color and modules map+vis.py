@@ -1,5 +1,5 @@
-# what map are we using? {'spain', 'india', 'USA'}
-my_map = 'network1'
+# what map are we using? {'spain', 'india', 'USA', 'network1', 'network2', 'network3'}
+my_map = 'spain'
 
 # ------------------------------ Import libraries ----------------------------- #
 
@@ -217,8 +217,4 @@ print steps
 benchmark.exportcsv(steps)
 
 # draw the map
-<<<<<<< HEAD
-importvis.Visualize(solution,my_map)
-=======
 #importvis.Visualize(solution,my_map,)
->>>>>>> origin/master
