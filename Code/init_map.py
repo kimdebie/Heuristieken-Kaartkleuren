@@ -5,34 +5,81 @@ import csv
 # Returns a dictionary with area names as keys and neighbours as values
 def load_dict(my_map):
 
-    if my_map == 'india':
-        filename = "Dictionary/Map1.csv"
+    if my_map in ['india', 'spain', 'USA']:
+        if my_map == 'india':
+            filename = "Dictionary/Map1.csv"
 
-    elif my_map == 'spain':
-        filename = "Dictionary/Map2.csv"
+        elif my_map == 'spain':
+            filename = "Dictionary/Map2.csv"
 
-    elif my_map == 'USA':
-        filename = "Dictionary/Map3v2.csv"
+        elif my_map == 'USA':
+            filename = "Dictionary/Map3v2.csv"
+        else:
+            sys.exit("unknown map, please check top of the code!")
+
+        # open provided file
+        countries_csv = open(filename, 'r')
+
+        # initiate reader for the csv file
+        reader = csv.reader(countries_csv)
+
+        # create dictionary
+        countries = dict()
+
+        # read all rows of csv_file
+        for row in reader:
+            # take first value of row as key in dictionary
+            # add rest of list as value in dictionary
+            countries[row[0]] = row[1:len(row)]
+
+        # return written dictionary
+        return countries
+
+    elif my_map in ['network1', 'network2', 'network3', 'network4']:
+        if my_map == 'network1':
+            filename = "Dictionary/Network1.csv"
+
+        elif my_map == 'network2':
+            filename = "Dictionary/Network2.csv"
+
+        elif my_map == 'network3':
+            filename = "Dictionary/Network3.csv"
+
+        elif my_map == 'network4':
+            filename = "Dictionary/Network3.csv"
+
+        # open provided file
+        countries_csv = open(filename, 'r')
+
+        # initiate reader for the csv file
+        reader = csv.reader(countries_csv, delimiter=';')
+        reader.next()
+
+        # create dictionary
+        countries = dict()
+
+        # read all rows of csv_file
+        for row in reader:
+            # take first value of row as key in dictionary
+            # add rest of list as value in dictionary
+            try:
+                if not row[1] in countries[row[0]]:
+                    countries[row[0]].append(row[1])
+            except (AttributeError, KeyError):
+                countries[row[0]] = list()
+                countries[row[0]].append(row[1])
+            try:
+                if not row[0] in countries[row[1]]:
+                    countries[row[1]].append(row[0])
+            except (AttributeError, KeyError):
+                countries[row[1]] = list()
+                countries[row[1]].append(row[0])
+
+        # return written dictionary
+        return countries
+    
     else:
         sys.exit("unknown map, please check top of the code!")
-
-    # open provided file
-    countries_csv = open(filename, 'r')
-
-    # initiate reader for the csv file
-    reader = csv.reader(countries_csv)
-
-    # create dictionary
-    countries = dict()
-
-    # read all rows of csv_file
-    for row in reader:
-        # take first value of row as key in dictionary
-        # add rest of list as value in dictionary
-        countries[row[0]] = row[1:len(row)]
-
-    # return written dictionary
-    return countries
 
 
 
