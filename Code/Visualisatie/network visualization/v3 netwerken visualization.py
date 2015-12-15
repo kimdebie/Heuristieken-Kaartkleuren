@@ -8,7 +8,7 @@ import init_net
 import csv
 
 # call the load_dict function
-dict_countries = init_net.load_dict("Network1.csv")
+dict_countries = init_net.load_dict("Network2.csv")
 
 countries_object = init_net.initiate(dict_countries)
 
@@ -132,5 +132,5 @@ with open('solutionfile.csv', 'wb') as outfile:
 import webbrowser
 new = 2
 
-url = "file:///C:/Users/Kim/Documents/GitHub/Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3network1.html"
+url = "file:///C:/Users/Kim/Documents/GitHub/Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3network2.html"
 webbrowser.open(url,new=new)
