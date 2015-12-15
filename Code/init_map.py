@@ -1,5 +1,6 @@
 
 import csv
+import sys
 
 # Loads a dictionary from a comma-separated-values file
 # Returns a dictionary with area names as keys and neighbours as values
@@ -157,6 +158,5 @@ def initiate(dict_countries):
     # add the colours
     for key in countries_object:
         countries_object[key].available_colours = GetColourArray(get_starting_number(countries_object))
-        print countries_object[key].available_colours
 
     return countries_object

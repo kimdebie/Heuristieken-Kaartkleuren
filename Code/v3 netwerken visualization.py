@@ -1,16 +1,17 @@
+my_map = "network2"
 
 
 # ----------------------- part to import the dictionary. ---------------------- #
 import random 
 import copy
 import time
-import init_net
+import init_map
 import csv
 
 # call the load_dict function
-dict_countries = init_net.load_dict("Network2.csv")
+dict_countries = init_map.load_dict("network2")
 
-countries_object = init_net.initiate(dict_countries)
+countries_object = init_map.initiate(dict_countries)
 
 # ------------------------ part to do the calculating ------------------------- #
 
@@ -122,15 +123,21 @@ def algorithm():
 
 solution = algorithm()
 
-with open('solutionfile.csv', 'wb') as outfile:
+with open('Network_files/solutionfile.csv', 'wb') as outfile:
     writer = csv.writer(outfile, delimiter=',')
     writer.writerow(["connection", "color"])
     for connection in solution:
         row = [connection.country_name, connection.current_colour]
         writer.writerow(row)
 
+location = "C:/Users\Kim\Documents\GitHub\Heuristieken-Kaartkleuren/"
+my_map = "network2"
+
+import os
+os.startfile(location + "Code\Network_files/visualization.bat")
+
 import webbrowser
 new = 2
 
-url = "file:///C:/Users/Kim/Documents/GitHub/Heuristieken-Kaartkleuren/Code/Visualisatie/network%20visualization/d3network2.html"
+url = "file:///" + location + "Code/Network_files/d3" + my_map + ".html"
 webbrowser.open(url,new=new)
