@@ -1,19 +1,46 @@
+# what map are we using? {'spain', 'india', 'USA'}
+my_map = 'network3'
 
+# ------------------------------ Import libraries ----------------------------- #
 
-# ----------------------- part to import the dictionary. ---------------------- #
-import random 
+import sys
+import random
 import copy
+
+# timing the algorithm + results
+import timeit
 import time
-import init_net
-import csv
+import numpy
 
-# call the load_dict function
-dict_countries = init_net.load_dict("Network2.csv")
+# import the visualisation and csv importer
+import importvis
+import init_map
 
-countries_object = init_net.initiate(dict_countries)
+# load the dictionary
+dict_countries = init_map.load_dict(my_map)
+
+# create list of countries
+countries_object = init_map.initiate(dict_countries)
+
+
+# update the color array.
+counter = 0
+def get_correct_number():
+    globals()['counter'] += 1
+    return init_map.get_starting_number(countries_object) + globals()['counter']
+
 
 # ------------------------ part to do the calculating ------------------------- #
 
+# initializing stack
+stack = []
+
+# initial situation
+for colour in countries_object[countries_object.keys()[0]].available_colours:
+    country = copy.copy(countries_object[countries_object.keys()[0]])
+    country.current_colour = colour
+    country.is_coloured = True
+    stack.append([country])
 
 # what is the next child we look at?
 def next_child(parent):
@@ -36,7 +63,7 @@ def next_child(parent):
 
 # function to generate children
 def generate_children(parent):
-    
+
     countrynames = []
     country_selected = False
 
@@ -48,15 +75,15 @@ def generate_children(parent):
         # for all non-coloured countries
         for key in countries_object:
             if key not in countrynames:
-                
+
                 countries_object[key].update_available_colours(parent)
-                
+
                 # if 1 colour available, colour this country first
                 if len(countries_object[key].available_colours) == 1:
                     next_country = countries_object[key]
                     country_selected = True
 
-    # if no country with 1 possibility is present, select random
+    # if no country with 1 possibility is present, select using algorithm for choice
     if not country_selected:
         next_country = next_child(parent)
         country_selected = True
@@ -77,13 +104,23 @@ def generate_children(parent):
         copy_parent.append(copy_next_country)
         children.append(copy_parent)
 
-    # save next country as coloured so that we won't pick it again   
+    # save next country as coloured so that we won't pick it again
     next_country.is_coloured = True
-    next_country.available_colours = ["red", "green","yellow", "blue"]
+    next_country.available_colours = init_map.GetColourArray(init_map.get_starting_number(countries_object) + globals()['counter'])
 
     return children
 
+def all_countries_coloured(countries_object):
+    for country in countries_object:
+        if countries_object[country].is_coloured == False:
+            return False
+    return True
+
+
 def algorithm():
+
+    steps = 0
+
     # initiate counter for random seed
     i = 1
 
@@ -105,38 +142,51 @@ def algorithm():
         country.is_coloured = True
         stack.append([country])
 
+    solution = []
+        
     # depth-first
     while (len(stack) != 0):
-
+        # new random seed for selecting next country
         parent = stack.pop()
+
+        #print len(parent)
+        #print len(countries_object)
         if len(parent) == len(countries_object):
+            #if you want the solution as output
             solution = parent
-            return solution
-
+            #if you want the amount of steps taken as output
+            #solution = steps
+            break
         children = generate_children(parent)
-
         # if there are no children, there are no solutions for this parent
         if len(children) != 0:
+            steps += len(children)
             for child in children:
                 stack.append(child)
 
+    # if the stack is empty, there are no solutions
+    if len(stack) == 0:
+        # add 1+ color to the country objects
+        GoodNumberOne = get_correct_number()
+
+        for key in countries_object:
+            countries_object[key].available_colours = init_map.GetColourArray(GoodNumberOne)
+
+        # initial situation
+        for colour in countries_object[countries_object.keys()[0]].available_colours:
+            country = copy.copy(countries_object[countries_object.keys()[0]])
+            country.current_colour = colour
+            country.is_coloured = True
+            stack.append([country])
+
+        # rerun the algorithm with +1 colour
+        return algorithm()
+    else:
+        return solution
+
+#solution = algorithm()  
+
 solution = algorithm()
 
-with open('Network_files/solutionfile.csv', 'wb') as outfile:
-    writer = csv.writer(outfile, delimiter=',')
-    writer.writerow(["connection", "color"])
-    for connection in solution:
-        row = [connection.country_name, connection.current_colour]
-        writer.writerow(row)
-
-location = "C:/Users\Kim\Documents\GitHub\Heuristieken-Kaartkleuren/"
-my_map = "network2"
-
-import os
-os.startfile(location + "Code\Network_files/visualization.bat")
-
-import webbrowser
-new = 2
-
-url = "file:///" + location + "Code/Network_files/d3" + my_map + ".html"
-webbrowser.open(url,new=new)
+# draw the map
+#importvis.Visualize(solution,my_map)

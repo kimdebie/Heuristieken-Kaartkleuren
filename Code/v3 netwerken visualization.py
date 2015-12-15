@@ -1,16 +1,17 @@
+my_map = "network2"
 
 
 # ----------------------- part to import the dictionary. ---------------------- #
 import random 
 import copy
 import time
-import init_net
+import init_map
 import csv
 
 # call the load_dict function
-dict_countries = init_net.load_dict("Network2.csv")
+dict_countries = init_map.load_dict("network2")
 
-countries_object = init_net.initiate(dict_countries)
+countries_object = init_map.initiate(dict_countries)
 
 # ------------------------ part to do the calculating ------------------------- #
 

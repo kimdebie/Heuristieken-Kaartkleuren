@@ -1,5 +1,5 @@
 # what map are we using? {'spain', 'india', 'USA'}
-my_map = 'spain'
+my_map = 'network1'
 
 # ------------------------------ Import libraries ----------------------------- #
 
@@ -273,4 +273,4 @@ ani = animation.FuncAnimation(fig, animate, 1, repeat=False, blit=True)
 plt.show()
 
 # draw the map
-#importvis.Draw_map(solution,my_map,"end")
+importvis.Visualize(solution,my_map)
