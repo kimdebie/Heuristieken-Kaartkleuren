@@ -1,4 +1,4 @@
-# what map are we using? {'spain', 'india', 'USA'}
+# what map are we using? {'spain', 'india', 'USA', 'network1', 'network2', 'network3'}
 my_map = 'spain'
 
 # ------------------------------ Import libraries ----------------------------- #
