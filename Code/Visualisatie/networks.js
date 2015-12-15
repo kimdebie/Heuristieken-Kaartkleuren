@@ -31,6 +31,7 @@ d3.csv('http://localhost:8000/solutionfile.csv', function(error, dataset){
   d3.select("#grid").text().split("\n").forEach(function(line, i) {
     // splits content of grid
     var re = /\w+/g, m;
+    //
     while (m = re.exec(line)) states.push({
       name: m[0],
       red: redConnections.indexOf(m[0]) >= 0,
