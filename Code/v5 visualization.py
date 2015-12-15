@@ -1,5 +1,11 @@
-# what map are we using? {'spain', 'india', 'USA'}
-my_map = 'network3'
+
+
+
+# what type of data are we using?
+    # maps :['spain', 'india', 'USA']
+    # network : ['network1', 'network2', 'network3']
+
+my_map = 'network2'
 
 # ------------------------------ Import libraries ----------------------------- #
 
@@ -24,10 +30,17 @@ countries_object = init_map.initiate(dict_countries)
 
 
 # update the color array.
-counter = 0
+counter = -1
+StartingpointNumb = init_map.get_starting_number(countries_object)
 def get_correct_number():
     globals()['counter'] += 1
-    return init_map.get_starting_number(countries_object) + globals()['counter']
+    return StartingpointNumb + globals()['counter']
+
+StartingNumber = init_map.GetColourArray(get_correct_number())
+
+# getter for startingnumber
+def return_startingnumber():
+    return copy.copy(StartingNumber)
 
 
 # ------------------------ part to do the calculating ------------------------- #
@@ -105,8 +118,11 @@ def generate_children(parent):
         children.append(copy_parent)
 
     # save next country as coloured so that we won't pick it again
+    # print "child creating", return_startingnumber(),temp_numb
     next_country.is_coloured = True
-    next_country.available_colours = init_map.GetColourArray(init_map.get_starting_number(countries_object) + globals()['counter'])
+    next_country.available_colours = return_startingnumber()
+    # print "child born", return_startingnumber(),temp_numb
+
 
     return children
 
@@ -143,7 +159,7 @@ def algorithm():
         stack.append([country])
 
     solution = []
-        
+
     # depth-first
     while (len(stack) != 0):
         # new random seed for selecting next country
@@ -157,7 +173,9 @@ def algorithm():
             #if you want the amount of steps taken as output
             #solution = steps
             break
+
         children = generate_children(parent)
+
         # if there are no children, there are no solutions for this parent
         if len(children) != 0:
             steps += len(children)
@@ -166,11 +184,16 @@ def algorithm():
 
     # if the stack is empty, there are no solutions
     if len(stack) == 0:
-        # add 1+ color to the country objects
-        GoodNumberOne = get_correct_number()
 
+        print return_startingnumber()
+        print
+
+        # StartingNumber =
+        globals()['StartingNumber'] = init_map.GetColourArray(get_correct_number())
+
+        print return_startingnumber()
         for key in countries_object:
-            countries_object[key].available_colours = init_map.GetColourArray(GoodNumberOne)
+            countries_object[key].available_colours = return_startingnumber()
 
         # initial situation
         for colour in countries_object[countries_object.keys()[0]].available_colours:
@@ -184,7 +207,7 @@ def algorithm():
     else:
         return solution
 
-#solution = algorithm()  
+#solution = algorithm()
 
 solution = algorithm()
 

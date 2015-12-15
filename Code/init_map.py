@@ -14,9 +14,7 @@ def load_dict(my_map):
             filename = "Dictionary/Map2.csv"
 
         elif my_map == 'USA':
-            filename = "Dictionary/Map3v2.csv"
-        else:
-            sys.exit("unknown map, please check top of the code!")
+            filename = "Dictionary/Map3.csv"
 
         # open provided file
         countries_csv = open(filename, 'r')
@@ -78,7 +76,7 @@ def load_dict(my_map):
 
         # return written dictionary
         return countries
-    
+
     else:
         sys.exit("unknown map, please check top of the code!")
 
