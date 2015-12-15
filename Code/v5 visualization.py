@@ -5,7 +5,7 @@
     # maps :['spain', 'india', 'USA']
     # network : ['network1', 'network2', 'network3']
 
-my_map = 'network2'
+my_map = 'network3'
 
 # ------------------------------ Import libraries ----------------------------- #
 

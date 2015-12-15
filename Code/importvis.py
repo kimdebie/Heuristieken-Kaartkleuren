@@ -113,15 +113,6 @@ def Visualize(solution, my_map):
         os.startfile(location + "/Network_files/visualization.bat")
 
 
-        import os, sys, subprocess
-
-        def open_file(location + "/Network_files/visualization.bat"):
-            if sys.platform == "win32":
-                os.startfile(filename)
-            else:
-                opener ="open" if sys.platform == "darwin" else "xdg-open"
-                subprocess.call([opener, filename])
-
         import webbrowser
         new = 2
 
