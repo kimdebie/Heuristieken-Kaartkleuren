@@ -108,13 +108,12 @@ def Visualize(solution, my_map):
                 row = [connection.country_name, connection.current_colour]
                 writer.writerow(row)
 
-        location = "C:/Users\Kim\Documents\GitHub\Heuristieken-Kaartkleuren/"
-
         import os
-        os.startfile(location + "Code\Network_files/visualization.bat")
+        location = os.path.dirname(os.path.realpath(__file__))
+        os.startfile(location + "/Network_files/visualization.bat")
 
         import webbrowser
         new = 2
 
-        url = "file:///" + location + "Code/Network_files/d3" + my_map + ".html"
+        url = "file:///" + location + "/Network_files/d3" + my_map + ".html"
         webbrowser.open(url,new=new)

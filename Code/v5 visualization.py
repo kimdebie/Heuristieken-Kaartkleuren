@@ -189,4 +189,4 @@ def algorithm():
 solution = algorithm()
 
 # draw the map
-#importvis.Visualize(solution,my_map)
+importvis.Visualize(solution,my_map)
