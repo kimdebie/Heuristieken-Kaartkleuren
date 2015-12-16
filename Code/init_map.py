@@ -118,7 +118,7 @@ def GetColourArray(number):
     color_array = ["red", "green","yellow","blue","purple","pink","orange"]
     return color_array[:number]
 
-def get_starting_number(countries_object):
+def get_starting_number(countries_object,my_map):
     """
     make an underestimation of where to start the algorithm
     """
@@ -128,6 +128,12 @@ def get_starting_number(countries_object):
     # Get the min colors needed.
     for entry in countries_object:
         test = countries_object[entry]
+
+        if my_map in ['india', 'spain', 'USA']:
+            if len(test.adjacent_countries) > 2 and len(test.adjacent_countries) % 2 == 1:
+                if max_amount < 4:
+                    max_amount = 4
+
         for entry2 in test.adjacent_countries: #get into the adjacent countries
             amount = len(set(entry2.adjacent_countries) & set(test.adjacent_countries))
             if max_amount < amount:
@@ -139,7 +145,7 @@ def get_starting_number(countries_object):
     return max_amount
 
 # ------------------------------ Initiation ---------------------------------- #
-def initiate(dict_countries):
+def initiate(dict_countries,my_map):
     # dictionary with all the country objects.
     countries_object = dict()
 
@@ -155,6 +161,6 @@ def initiate(dict_countries):
 
     # add the colours
     for key in countries_object:
-        countries_object[key].available_colours = GetColourArray(get_starting_number(countries_object))
+        countries_object[key].available_colours = GetColourArray(get_starting_number(countries_object,my_map))
 
     return countries_object

@@ -26,21 +26,25 @@ import init_map
 dict_countries = init_map.load_dict(my_map)
 
 # create list of countries
-countries_object = init_map.initiate(dict_countries)
-
+countries_object = init_map.initiate(dict_countries,my_map)
 
 # update the color array.
 counter = -1
-StartingpointNumb = init_map.get_starting_number(countries_object)
+StartingpointNumb = init_map.get_starting_number(countries_object,my_map)
 def get_correct_number():
     globals()['counter'] += 1
     return StartingpointNumb + globals()['counter']
 
+print StartingpointNumb
+
 StartingNumber = init_map.GetColourArray(get_correct_number())
+
+print StartingNumber
 
 # getter for startingnumber
 def return_startingnumber():
     return copy.copy(StartingNumber)
+
 
 
 # ------------------------ part to do the calculating ------------------------- #
