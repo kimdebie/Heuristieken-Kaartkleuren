@@ -11,7 +11,7 @@ my_map = 'india'
     # 'v2': random depht first, prioritizing countries with 1 colour available 
     # 'v3': adjacent-ordered depth first, prioritizing single colour-countries
     # 'v4': variable amount of starting colours, using v3
-my_algo = 'v1'
+my_algo = 'v4'
 
 # ------------------------------ Import libraries ----------------------------- #
 
@@ -82,9 +82,12 @@ def stepcounter(count, choice):
     # export data to csv
     benchmark.exportcsv(steps, filename)
 
+# solution = algo.algorithm(countries_object, num_colours, colour_list)[0]
+# print solution
+
 # # draw the map
 # solution = algo.algorithm(countries_object, num_colours, colour_list)[0]
 # importvis.Visualize(solution,my_map)
 
-# # export stepcounter to csv, either counting 'steps' or 'children'
-# stepcounter(40, steps)
+# export stepcounter to csv, either counting 'steps' or 'children'
+stepcounter(40, 'steps')

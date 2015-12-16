@@ -189,4 +189,10 @@ def algorithm(countries_object, num_colours, colour_list):
         for country in countries_object:
             countries_object[country].available_colours = colour_list[:num_colours]
 
-        return algorithm(countries_object, num_colours, colour_list)
+        result = algorithm(countries_object, num_colours, colour_list)
+
+        births += result[1]
+
+        childrenCreated += result[2]
+
+        return [result[0], births, childrenCreated]
