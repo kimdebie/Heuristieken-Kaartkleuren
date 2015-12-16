@@ -96,7 +96,7 @@ class country(object):
         self.adjacent_countries = list()
 
     # set the adjecent countries for this country and determine length
-    def add_adjacent_countries(self,adj_country_list,countries_object):
+    def add_adjacent_countries(self, adj_country_list, countries_object):
         for entry in adj_country_list:
             self.adjacent_countries.append(countries_object[entry])
 
@@ -118,7 +118,7 @@ def GetColourArray(number):
     color_array = ["red", "green","yellow","blue","purple","pink","orange"]
     return color_array[:number]
 
-def get_starting_number(countries_object,my_map):
+def get_starting_number(countries_object, my_map):
     """
     make an underestimation of where to start the algorithm
     """
@@ -145,7 +145,7 @@ def get_starting_number(countries_object,my_map):
     return max_amount
 
 # ------------------------------ Initiation ---------------------------------- #
-def initiate(dict_countries,my_map):
+def initiate(dict_countries, my_map, algo_vers):
     # dictionary with all the country objects.
     countries_object = dict()
 
@@ -157,10 +157,17 @@ def initiate(dict_countries,my_map):
     # add the adjacent_countries to the object.
     # now add these objects
     for key in countries_object:
-        countries_object[key].add_adjacent_countries(dict_countries[key],countries_object)
+        countries_object[key].add_adjacent_countries(dict_countries[key], countries_object)
 
-    # add the colours
-    for key in countries_object:
-        countries_object[key].available_colours = GetColourArray(get_starting_number(countries_object,my_map))
+    # if the 4th algorithm is used, minimum colors are calculated dynamically
+    # standard is 4 colors
+    if algo_vers == 'v4':
+
+        # determine minimum amount of colors for provided map
+        colours = GetColourArray(get_starting_number(countries_object, my_map))
+
+        # add the colours
+        for key in countries_object:
+            countries_object[key].available_colours = colours
 
     return countries_object

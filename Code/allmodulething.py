@@ -34,7 +34,7 @@ else:
 dict_countries = init_map.load_dict(my_map)
 
 # create list of countries
-countries_object = init_map.initiate(dict_countries)
+countries_object = init_map.initiate(dict_countries, my_algo)
 
 # update the color array.
 counter = 0

@@ -37,13 +37,13 @@ def get_correct_number():
 
 print StartingpointNumb
 
-StartingNumber = init_map.GetColourArray(get_correct_number())
+StartingColours = init_map.GetColourArray(get_correct_number())
 
-print StartingNumber
+print StartingColours
 
-# getter for startingnumber
-def return_startingnumber():
-    return copy.copy(StartingNumber)
+# returns StartingColours
+def return_startingColours():
+    return copy.copy(StartingColours)
 
 
 
@@ -122,10 +122,10 @@ def generate_children(parent):
         children.append(copy_parent)
 
     # save next country as coloured so that we won't pick it again
-    # print "child creating", return_startingnumber(),temp_numb
+    # print "child creating", return_startingColours(),temp_numb
     next_country.is_coloured = True
-    next_country.available_colours = return_startingnumber()
-    # print "child born", return_startingnumber(),temp_numb
+    next_country.available_colours = return_startingColours()
+    # print "child born", return_startingColours(),temp_numb
 
 
     return children
@@ -189,15 +189,15 @@ def algorithm():
     # if the stack is empty, there are no solutions
     if len(stack) == 0:
 
-        print return_startingnumber()
+        print return_startingColours()
         print
 
-        # StartingNumber =
-        globals()['StartingNumber'] = init_map.GetColourArray(get_correct_number())
+        # StartingColours =
+        globals()['StartingColours'] = init_map.GetColourArray(get_correct_number())
 
-        print return_startingnumber()
+        print return_startingColours()
         for key in countries_object:
-            countries_object[key].available_colours = return_startingnumber()
+            countries_object[key].available_colours = return_startingColours()
 
         # initial situation
         for colour in countries_object[countries_object.keys()[0]].available_colours:
