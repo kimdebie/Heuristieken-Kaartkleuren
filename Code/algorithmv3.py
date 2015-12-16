@@ -1,9 +1,11 @@
 """
-" algorithmv1.py
+" algorithmv3.py
 " 
 " Depth first search for a solution with a preset amount of colors.
-" Order of coloring countries is all random.
-" Will find a solution if there is one, but might take a little while.
+" Countries are ordered based on amount of adjacent countries.
+" The country with the most adjacent is colored first, the country with the least is colored last.
+" An exception is a country that only has one colour available, this gets immediate priority.
+" Will find a solution if there is one, will usually take the shortest amount of steps to get there.
 "
 " UvA - Minor Programmeren - Heuristieken 
 " Kaartkleuren
@@ -30,12 +32,29 @@ def next_child(parent, countries_object):
     for country in parent:
         countrynames.append(country.country_name)
 
-    # generates random key
+    # check all non-coloured countries for available colors
+    for key in countries_object:
+        if key not in countrynames:
+
+            countries_object[key].update_available_colours(parent)
+
+            # if only one colour is available, this country is returned as next country
+            if len(countries_object[key].available_colours) == 1:
+                return countries_object[key]
+                
+
+    # if no country with 1 color available was found, select random non-colourde country
     key = random.choice(countries_object.keys())
 
-    # if key is in already colored countries, selects a new key untill uncolored country is selected
+    # if key is in already colored countries, selects a new key untill uncoloured country is selected
     while key in countrynames:
         key = random.choice(countries_object.keys())
+
+    for country in countries_object:
+            if countries_object[country].amount_adjacent > countries_object[key].amount_adjacent and country not in countrynames:
+                key = country
+
+    country_selected = True
 
     # return the country object from the countries_object dictionary.
     return countries_object[key]
@@ -50,6 +69,7 @@ def next_child(parent, countries_object):
 ' Returns a list of the created children. If no children created, the list will be empty.
 '''
 def generate_children(parent, countries_object):
+    
     # create placeholder for children
     children = []
 
@@ -104,6 +124,10 @@ def algorithm(countries_object):
 
     # choose first random key
     key = random.choice(countries_object.keys())
+
+    for country in countries_object:
+        if countries_object[country].amount_adjacent > countries_object[key].amount_adjacent:
+            key = country
 
     # create 1 colored version of the chosen country and append to stack
     colour = countries_object[key].available_colours[len(countries_object[key].available_colours) - 1]

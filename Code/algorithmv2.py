@@ -1,9 +1,10 @@
 """
-" algorithmv1.py
+" algorithmv2.py
 " 
 " Depth first search for a solution with a preset amount of colors.
 " Order of coloring countries is all random.
-" Will find a solution if there is one, but might take a little while.
+" An exception is a country that only has one colour available, this gets immediate priority.
+" Will find a solution if there is one, a lot faster than version 1.
 "
 " UvA - Minor Programmeren - Heuristieken 
 " Kaartkleuren
@@ -30,12 +31,25 @@ def next_child(parent, countries_object):
     for country in parent:
         countrynames.append(country.country_name)
 
-    # generates random key
+    # check all non-coloured countries for available colors
+    for key in countries_object:
+        if key not in countrynames:
+
+            countries_object[key].update_available_colours(parent)
+
+            # if only one colour is available, this country is returned as next country
+            if len(countries_object[key].available_colours) == 1:
+                return countries_object[key]
+                
+
+    # if no country with 1 color available was found, select random non-colourde country
     key = random.choice(countries_object.keys())
 
-    # if key is in already colored countries, selects a new key untill uncolored country is selected
+    # if key is in already colored countries, selects a new key untill uncoloured country is selected
     while key in countrynames:
         key = random.choice(countries_object.keys())
+
+    country_selected = True
 
     # return the country object from the countries_object dictionary.
     return countries_object[key]
@@ -50,6 +64,7 @@ def next_child(parent, countries_object):
 ' Returns a list of the created children. If no children created, the list will be empty.
 '''
 def generate_children(parent, countries_object):
+    
     # create placeholder for children
     children = []
 
@@ -145,7 +160,7 @@ def algorithm(countries_object):
             # update counters
             births += 1
             childrenCreated += len(children)
-
+            
             # all created children could lead to a solution, append them to stack
             for child in children:
                 stack.append(child)
