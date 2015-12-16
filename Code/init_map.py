@@ -140,6 +140,10 @@ def get_starting_number(countries_object, my_map):
 
     return max_amount
 
+def GetColourArray(number):
+    color_array = ["red", "green","yellow","blue","purple","pink","orange"]
+    return color_array[:number]
+
 # ------------------------------ Initiation ---------------------------------- #
 def initiate(dict_countries, my_map, algo_vers, colour_list):
     # dictionary with all the country objects.
