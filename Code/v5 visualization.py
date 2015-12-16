@@ -5,7 +5,7 @@
     # maps :['spain', 'india', 'USA']
     # network : ['network1', 'network2', 'network3']
 
-my_map = 'network1'
+my_map = 'network2'
 
 # ------------------------------ Import libraries ----------------------------- #
 
@@ -26,7 +26,7 @@ import init_map
 dict_countries = init_map.load_dict(my_map)
 
 # create list of countries
-countries_object = init_map.initiate(dict_countries,my_map, 'v4')
+countries_object = init_map.initiate(dict_countries,my_map, 'v4', ["red", "green","yellow","blue","purple","pink","orange"])
 
 # update the color array.
 counter = -1
