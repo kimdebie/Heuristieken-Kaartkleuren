@@ -114,10 +114,6 @@ class country(object):
 
 # ------------------------ Update minimum colours ---------------------------- #
 
-def GetColourArray(number):
-    color_array = ["red", "green","yellow","blue","purple","pink","orange"]
-    return color_array[:number]
-
 def get_starting_number(countries_object, my_map):
     """
     make an underestimation of where to start the algorithm
@@ -145,7 +141,7 @@ def get_starting_number(countries_object, my_map):
     return max_amount
 
 # ------------------------------ Initiation ---------------------------------- #
-def initiate(dict_countries, my_map, algo_vers):
+def initiate(dict_countries, my_map, algo_vers, colour_list):
     # dictionary with all the country objects.
     countries_object = dict()
 
@@ -164,7 +160,7 @@ def initiate(dict_countries, my_map, algo_vers):
     if algo_vers == 'v4':
 
         # determine minimum amount of colors for provided map
-        colours = GetColourArray(get_starting_number(countries_object, my_map))
+        colours = colour_list[:get_starting_number(countries_object, my_map)]
 
         # add the colours
         for key in countries_object:

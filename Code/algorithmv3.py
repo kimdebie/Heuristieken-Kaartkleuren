@@ -115,7 +115,7 @@ def generate_children(parent, countries_object):
 ' Returns the array of country objects of the solution if found.
 ' If no solution is found, prints 'no solution', returns nothing.
 '''
-def algorithm(countries_object):
+def algorithm(countries_object, *args):
     # create placeholder for solution
     solution = []
 

@@ -5,7 +5,7 @@
     # maps :['spain', 'india', 'USA']
     # network : ['network1', 'network2', 'network3']
 
-my_map = 'network3'
+my_map = 'network1'
 
 # ------------------------------ Import libraries ----------------------------- #
 
@@ -26,7 +26,7 @@ import init_map
 dict_countries = init_map.load_dict(my_map)
 
 # create list of countries
-countries_object = init_map.initiate(dict_countries,my_map)
+countries_object = init_map.initiate(dict_countries,my_map, 'v4')
 
 # update the color array.
 counter = -1
@@ -169,8 +169,6 @@ def algorithm():
         # new random seed for selecting next country
         parent = stack.pop()
 
-        #print len(parent)
-        #print len(countries_object)
         if len(parent) == len(countries_object):
             #if you want the solution as output
             solution = parent
@@ -210,8 +208,6 @@ def algorithm():
         return algorithm()
     else:
         return solution
-
-#solution = algorithm()
 
 solution = algorithm()
 

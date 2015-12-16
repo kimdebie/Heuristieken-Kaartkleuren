@@ -70,7 +70,7 @@ def next_child(parent, countries_object):
 ' 
 ' Returns a list of the created children. If no children created, the list will be empty.
 '''
-def generate_children(parent, countries_object):
+def generate_children(parent, countries_object, used_colours):
     
     # create placeholder for children
     children = []
@@ -102,7 +102,7 @@ def generate_children(parent, countries_object):
     next_country.is_coloured = True
 
     # reset available colours to all, needed if we will color the same area again
-    next_country.available_colours = ["red", "green","yellow","blue"]
+    next_country.available_colours = used_colours
 
     # return the array of all created children
     return children
@@ -117,7 +117,7 @@ def generate_children(parent, countries_object):
 ' Returns the array of country objects of the solution if found.
 ' If no solution is found, prints 'no solution', returns nothing.
 '''
-def algorithm(countries_object):
+def algorithm(countries_object, num_colours, colour_list):
     # create placeholder for solution
     solution = []
 
@@ -132,7 +132,8 @@ def algorithm(countries_object):
             key = country
 
     # create 1 colored version of the chosen country and append to stack
-    colour = countries_object[key].available_colours[len(countries_object[key].available_colours) - 1]
+    # print countries_object[key].available_colours
+    colour = countries_object[key].available_colours[0]
     country = copy.copy(countries_object[key])
     country.current_colour = colour
     country.is_coloured = True
@@ -146,6 +147,8 @@ def algorithm(countries_object):
 
     # counter for the amount of children created, first has just been created
     childrenCreated = 1
+
+    used_colours = colour_list[:num_colours]
 
     # while there is something in the stack, see if a solution can be found
     while (len(stack) != 0):
@@ -164,7 +167,8 @@ def algorithm(countries_object):
         if len(parent) == len(countries_object):
             return [parent, births, childrenCreated]
         
-        children = generate_children(parent, countries_object)
+        # print used_colours
+        children = generate_children(parent, countries_object, used_colours)
 
         # if there are no children, no need to append them
         if len(children) != 0:
@@ -178,4 +182,11 @@ def algorithm(countries_object):
 
     # if the stack is empty, there are no solutions
     if len(stack) == 0:
-        print "No solution"
+        print 'trying again'
+
+        num_colours += 1
+
+        for country in countries_object:
+            countries_object[country].available_colours = colour_list[:num_colours]
+
+        return algorithm(countries_object, num_colours, colour_list)

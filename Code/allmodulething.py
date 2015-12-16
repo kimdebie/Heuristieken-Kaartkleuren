@@ -1,24 +1,28 @@
-# what map are we using? {'spain', 'india', 'USA', 'network1', 'network2', 'network3'}
-my_map = 'network3'
 
-# what algorithm do we want to use? {'v1', 'v2', 'v3', 'v4'}
-my_algo = 'v3'
+
+
+# what type of data are we using?
+    # maps :['spain', 'india', 'USA']
+    # network : ['network1', 'network2', 'network3']
+my_map = 'india'
+
+# what algorithm do we want to use? 
+    # 'v1': random depth first
+    # 'v2': random depht first, prioritizing countries with 1 colour available 
+    # 'v3': adjacent-ordered depth first, prioritizing single colour-countries
+    # 'v4': variable amount of starting colours, using v3
+my_algo = 'v1'
 
 # ------------------------------ Import libraries ----------------------------- #
 
 import sys
-import random
-import copy
-
-# timing the algorithm + results
-import timeit
-import numpy
 
 # import the visualisation, csv importer and benchmark module
 import importvis
 import init_map
 import benchmark
 
+# import the algorithm chosen by user in the top section.
 if my_algo == 'v1':
     import algorithmv1 as algo
 elif my_algo == 'v2':
@@ -28,21 +32,22 @@ elif my_algo == 'v3':
 elif my_algo == 'v4':
     import algorithmv4 as algo
 else:
-    sys.exit("Unvalid algorithm chosen, try again...")
+    sys.exit("Unvalid algorithm chosen, try again")
+
+# -------------------------- Initiate network or map ------------------------- #
+
+colour_list = ["red", "green", "yellow", "blue", "purple", "pink", "orange"]
 
 # load the dictionary
 dict_countries = init_map.load_dict(my_map)
 
 # create list of countries
-countries_object = init_map.initiate(dict_countries, my_algo)
+countries_object = init_map.initiate(dict_countries, my_map, my_algo, colour_list)
 
-# update the color array.
-counter = 0
-def get_correct_number():
-    globals()['counter'] += 1
-    return init_map.get_starting_number(countries_object) + globals()['counter']
+# find the minimum amount of colours needed
+num_colours = init_map.get_starting_number(countries_object, my_map)
 
-#--------------------return the timing of the results--------------------------------------------#
+# -------------------- return the timing of the results -------------------------------------------- #
 
 '''
 ' Takes two arguments; count (an integer >0) and choice ('steps' or 'children')
@@ -52,6 +57,7 @@ def get_correct_number():
 '''
 def stepcounter(count, choice):
 
+    # validate user choice of type
     if choice == 'steps':
         num = 1
     elif choice == 'children':
@@ -59,26 +65,26 @@ def stepcounter(count, choice):
     else:
         sys.exit('stepcounter: Provide a valid choice, steps or children')
 
+    # validate user choice of runs
     if count < 1:
         sys.exit('stepcounter: Can\'t run less than 1 run, try again')
 
     steps = []
 
+    # run the algorithm as often as asked
     for i in range(0,count):
-        step = algo.algorithm(countries_object)[num]
+        step = algo.algorithm(countries_object, num_colours, colour_list)[num]
         steps.append(step)
 
-    return steps
+    # construct filename from chosen algorithm and map
+    filename = my_algo + my_map
 
-solution = algo.algorithm(countries_object)[0]
-steps = stepcounter(100, 'steps')
+    # export data to csv
+    benchmark.exportcsv(steps, filename)
 
-if solution:
-    for country in solution:
-        print country.country_name, ':', country.current_colour
-
-# export the amount of steps taken to csv
-#benchmark.exportcsv(steps)
-
-# draw the map
+# # draw the map
+# solution = algo.algorithm(countries_object, num_colours, colour_list)[0]
 # importvis.Visualize(solution,my_map)
+
+# # export stepcounter to csv, either counting 'steps' or 'children'
+# stepcounter(40, steps)
