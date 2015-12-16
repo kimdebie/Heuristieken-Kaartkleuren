@@ -1,5 +1,5 @@
 """
-" algorithm v1.py
+" algorithmv1.py
 " 
 " Depth first search for a solution with a preset amount of colors.
 " Order of coloring countries is all random.
@@ -13,6 +13,7 @@
 
 import random 
 import copy
+import time
 
 
 '''
@@ -95,6 +96,11 @@ def generate_children(parent, countries_object):
 ' If no solution is found, prints 'no solution', returns nothing.
 '''
 def algorithm(countries_object):
+    # create placeholder for solution
+    solution = []
+
+    # initializing stack
+    stack = []
 
     # choose first random key
     key = random.choice(countries_object.keys())
@@ -105,12 +111,6 @@ def algorithm(countries_object):
     country.current_colour = colour
     country.is_coloured = True
     stack.append([country])
-
-    # create placeholder for solution
-    solution = []
-
-    # initializing stack
-    stack = []
     
     # create counter to generate random seeds.
     i = 1
