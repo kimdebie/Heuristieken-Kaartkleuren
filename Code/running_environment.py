@@ -4,7 +4,7 @@
 # what type of data are we using?
     # maps :['spain', 'india', 'USA']
     # network : ['network1', 'network2', 'network3']
-my_map = 'network3'
+my_map = 'india'
 
 # what algorithm do we want to use? 
     # 'v1': random depth first
@@ -90,4 +90,4 @@ def stepcounter(count, choice):
 # importvis.Visualize(solution,my_map)
 
 # export stepcounter to csv, either counting 'steps' or 'children'
-stepcounter(50, 'steps')
+stepcounter(40, 'steps')
