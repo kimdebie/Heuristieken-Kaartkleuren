@@ -13,7 +13,12 @@ All source code and data needed for the algorithm.
 		The datafiles of the maps and networks, in csv format.
 
 	/JSON_files:
-		Files needed for the visualisation of the maps.
+		For the visualisation of the maps, shapfiles have been used to show the maps.
+		These shapefiles are in the map Code/JSON_files.
+			Fixed_raj is for Rajasthan, India Map 1.
+			Fixed_spaj is for Spain Map 2.
+			Fixed_penns is for pennsylvania, USA Map 3.
+
 
 	/Network_files:
 		Files specific for the network visualization.
@@ -86,10 +91,3 @@ All source code and data needed for the algorithm.
 
 		running_environment:
 		USE THIS FILE TO TEST THE ALGORITHMS. Select graph to be used, algorithm version, and choose visualization or testing.
-
-
-	For the visualisation of the maps, shapfiles have been used to show the maps.
-	These shapefiles are in the map Code/JSON_files.
-		Fixed_raj is for Rajasthan, India Map 1.
-		Fixed_spaj is for Spain Map 2.
-		Fixed_penns is for pennsylvania, USA Map 3.
