@@ -1,5 +1,7 @@
 # Heuristieken
 
+Github link : https://github.com/kimdebie/Heuristieken-Kaartkleuren
+
 Readme.md
 Gives an overview of the different modules, algorithms and other files found in the github directory Heuristieken-Kaartkleuren.
 By: Kim de Bie, Jeroen de Jong & Rik Volger
@@ -84,3 +86,10 @@ All source code and data needed for the algorithm.
 
 		running_environment:
 		USE THIS FILE TO TEST THE ALGORITHMS. Select graph to be used, algorithm version, and choose visualization or testing.
+
+
+	For the visualisation of the maps, shapfiles have been used to show the maps.
+	These shapefiles are in the map Code/JSON_files.
+		Fixed_raj is for Rajasthan, India Map 1.
+		Fixed_spaj is for Spain Map 2.
+		Fixed_penns is for pennsylvania, USA Map 3.
