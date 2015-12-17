@@ -29,7 +29,7 @@ All source code and data needed for the algorithm.
 					Loads csv-map data into dictionary.
 					Requires a csv filename of the file containing the network or map data.
 					Returns a dictionary with node# or countries as keys, array of friends node# or adjacent countries as values.
-				
+
 				initiate(dict_countries)
 					Returns a list of country-objects.
 
@@ -60,11 +60,15 @@ All source code and data needed for the algorithm.
 
 		importvis:
 		Used to visualize either the map or network.
-			
+
 			Functions:
 				Visualize(solution, my_map)
 					Will create a map using matplotlib and numpy if a valid countryname is provided as my_map.
 					If a networkname is provided, it will create a webbased visualization of the network.\
+
+					In case the network visualisation doesn't work correctly,
+					Run your own server of choice so the solutionfile.csv (in Code/Network_files)
+					can be loaded with the javascript file network.js
 
 		algorithmv1:
 		First algorithm. Simple depth first with some pruning (as described in report and presentation).
@@ -76,8 +80,7 @@ All source code and data needed for the algorithm.
 		Third algorithm. Version 2 extended with ordering by connections (again, see report/presentation).
 
 		algorithmv4:
-		Last and final algorithm. Selects the minimal chromatic number (report/presentation for details). 
+		Last and final algorithm. Selects the minimal chromatic number (report/presentation for details).
 
 		running_environment:
-		USE THIS FILE TO TEST THE ALGORITHMS. Select graph to be used, algorithm version, and choose visualization or testing. 
-
+		USE THIS FILE TO TEST THE ALGORITHMS. Select graph to be used, algorithm version, and choose visualization or testing.
