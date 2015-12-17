@@ -11,7 +11,7 @@ var states = [],
     blueConnections = []
 
 // visualization builds on csv file containing node plus color
-d3.csv('http://localhost:8000/Network_files/solutionfile.csv', function(error, dataset){
+d3.csv('http://localhost:8000/solutionfile.csv', function(error, dataset){
 
   // creates an array for each node's color 'state'
   dataset.forEach(function(d){

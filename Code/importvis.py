@@ -117,5 +117,5 @@ def Visualize(solution, my_map):
         import webbrowser
         new = 2
 
-        url = "http://localhost:8000/Network_files/d3" + my_map + ".html"
+        url = "http://localhost:8000/d3" + my_map + ".html"
         webbrowser.open(url,new=new)
