@@ -1,4 +1,6 @@
-
+# Kim de Bie, Jeroen de Jong en Rik Volger
+# Heuristieken - Universiteit van Amsterdam
+# This is the file from which to run the algorithms for coloring a graph that we designed. 
 
 
 # what type of data are we using?
@@ -85,9 +87,12 @@ def stepcounter(count, choice):
 # solution = algo.algorithm(countries_object, num_colours, colour_list)[0]
 # print solution
 
-# # draw the map
+
+# ----------- Select whether you want to test the algorithm by running it multiple times or visualize it --------------------#
+
+# Deselect these to visualize the graph
 solution = algo.algorithm(countries_object, num_colours, colour_list)[0]
 importvis.Visualize(solution,my_map)
 
-# export stepcounter to csv, either counting 'steps' or 'children'
+# Deselect this to export stepcounter to csv, either counting 'steps' or 'children'
 #stepcounter(50, 'steps')

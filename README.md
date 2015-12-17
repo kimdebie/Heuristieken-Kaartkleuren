@@ -2,7 +2,7 @@
 
 Readme.md
 Gives an overview of the different modules, algorithms and other files found in the github directory Heuristieken-Kaartkleuren.
-By: Jeroen de Jong, Kim de Bie, Rik Volger
+By: Kim de Bie, Jeroen de Jong & Rik Volger
 
 /Code:
 All source code and data needed for the algorithm.
@@ -16,8 +16,8 @@ All source code and data needed for the algorithm.
 	/Network_files:
 		Files specific for the network visualization.
 
-	/Stappenteller:
-		Files with data on the amount of steps needed to run the algorithm on each map.
+	/Timelapse:
+	A visualisation of the working algorithm, coloring countries one by one.
 
 	Modules:
 
@@ -66,14 +66,18 @@ All source code and data needed for the algorithm.
 					Will create a map using matplotlib and numpy if a valid countryname is provided as my_map.
 					If a networkname is provided, it will create a webbased visualization of the network.\
 
-		Algorithms:
-			v1	v2	v3	v4	v5 Needs cleaning...
+		algorithmv1:
+		First algorithm. Simple depth first with some pruning (as described in report and presentation).
 
-/Presentaties:
-	De presentaties van de verschillende weken, inclusief eindpresentatie in final.
+		algorithmv2:
+		Second algorithm. Version 1 extended with single-color priority (see report and presentation).
 
-/Theorie:
-	Some reading on the 4 color theorem
+		algorithmv3:
+		Third algorithm. Version 2 extended with ordering by connections (again, see report/presentation).
 
-/Timelapse:
-	A visualisation of the working algorithm, coloring countries one by one.
+		algorithmv4:
+		Last and final algorithm. Selects the minimal chromatic number (report/presentation for details). 
+
+		running_environment:
+		USE THIS FILE TO TEST THE ALGORITHMS. Select graph to be used, algorithm version, and choose visualization or testing. 
+
