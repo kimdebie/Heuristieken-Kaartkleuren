@@ -110,11 +110,12 @@ def Visualize(solution, my_map):
 
         import os
         location = os.path.dirname(os.path.realpath(__file__))
+        print "Opening a server. Please remember to close the server after you're done."
         os.startfile(location + "/Network_files/visualization.bat")
 
 
         import webbrowser
         new = 2
 
-        url = "file:///" + location + "/Network_files/d3" + my_map + ".html"
+        url = "http://localhost:8000/Network_files/d3" + my_map + ".html"
         webbrowser.open(url,new=new)
